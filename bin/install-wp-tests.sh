@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 ##
-# This script installs wordpress for phpunit tests and rspec integration tests
+# This script installs wordpress for phpunit tests
 ##
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 DIR=$(dirname ${DIR})
@@ -151,11 +151,6 @@ install_real_wp() {
   php wp-cli.phar core install  --url=$WP_TEST_URL --title='Test' --admin_user=$WP_TEST_USER --admin_password=$WP_TEST_USER_PASS --admin_email="$WP_TEST_USER@wordpress.dev" --path=$WP_CORE_DIR
 }
 
-install_rspec_requirements() {
-  gem install bundler
-  bundle install --gemfile=$DIR/spec/Gemfile
-}
-
 start_server() {
   mv $DIR/lib/router.php $WP_CORE_DIR/router.php
   cd $WP_CORE_DIR
@@ -178,6 +173,5 @@ install_test_suite
 install_db
 install_real_wp
 link_this_project
-install_rspec_requirements
 start_server
 run_phpcs
